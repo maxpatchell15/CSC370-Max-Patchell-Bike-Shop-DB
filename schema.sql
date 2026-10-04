@@ -1,0 +1,46 @@
+CREATE TABLE Customer (
+	CustomerID INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Email VARCHAR(100),
+    Phone VARCHAR(30)
+);
+
+CREATE TABLE BicycleModel (
+    ModelID INT AUTO_INCREMENT PRIMARY KEY,
+    Brand VARCHAR(100) NOT NULL,
+    ModelName VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Bicycle (
+    BikeID INT AUTO_INCREMENT PRIMARY KEY,
+    ModelID INT NOT NULL,
+    ListedPrice DECIMAL(10, 2) NOT NULL,
+
+    FOREIGN KEY (ModelID)
+        REFERENCES BicycleModel(ModelID)
+);
+
+CREATE TABLE Sale (
+    SaleID INT AUTO_INCREMENT PRIMARY KEY,
+    CustomerID INT NOT NULL,
+    SaleDate DATE NOT NULL,
+
+    FOREIGN KEY (CustomerID)
+        REFERENCES Customer(CustomerID)
+);
+
+CREATE TABLE SaleItem (
+    BikeID INT PRIMARY KEY,
+    SaleID INT NOT NULL,
+    PricePaid DECIMAL(10, 2) NOT NULL,
+
+    FOREIGN KEY (BikeID)
+        REFERENCES Bicycle(BikeID),
+
+    FOREIGN KEY (SaleID)
+        REFERENCES Sale(SaleID)
+);
+
+
+
+
