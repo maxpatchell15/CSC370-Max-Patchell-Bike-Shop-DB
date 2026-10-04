@@ -5,7 +5,7 @@
 - Bicycle(**BikeID**, ModelID, ListedPrice)
 - Sale(**SaleID**, CustomerID, SaleDate)
 - SaleItem(**BikeID**, SaleID, PricePaid)
-- 
+  
 Primary keys are listed in **bold**.
 
 ## Foreign Keys
