@@ -19,7 +19,7 @@ This project is designed to be scalable, but will be developed within the time a
 
 | File | Content |
 | -------- | -------- | 
-| README.md | Project description, requirements and how to run. |
+| README.md | Project description and requirements. |
 | ERD |  |
 
 ## AI Usage
