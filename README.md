@@ -22,8 +22,6 @@ This project is designed to be scalable, but will be developed within the time a
 | README.md | Project description, requirements and how to run. |
 | ERD |  |
 
-## How to Run
-
 ## AI Usage
 GenAI will be used for this project under the restrictions provided by the course/project outline. It will be used mostly for formatting, and will be aptly described when used.
 
