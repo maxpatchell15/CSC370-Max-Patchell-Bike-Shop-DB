@@ -36,4 +36,4 @@ Explain whether any findings justify changes to the bike shop database.
 
 The next submission will include updated design notes, diagrams, SQL tests, and any revised implementation. I will compare the results with the success criteria and explain any unfinished goals.
 
-TA/client feedback will guide feature choices and priorities while keeping the plan aligned with the course competencies.
+TA/client feedback will guide future choices and priorities while keeping the plan aligned with the course competencies.
