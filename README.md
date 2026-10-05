@@ -18,11 +18,17 @@ This project is designed to be scalable, but will be developed within the time a
 ## Organisation
 
 | File | Content |
-| -------- | -------- | 
-| README.md | Project description and requirements. |
-| ERD |  |
+| --- | --- |
+| README.md | Project overview and requirements. |
+| ERD.pdf | Diagram showing entities, attributes, relationships, and multiplicities. |
+| relational_schema.md | Tables, primary keys, foreign keys, and mapping from the ERD. |
+| BCNF.md | Assumptions, functional dependencies, closures, keys, and BCNF justification. |
+| schema.sql | SQL statements to create the five tables. |
+| sample_data.sql | Sample customers, bicycle models, bikes, and sales. |
+| queries.sql | Queries showing purchases, available inventory, and sale totals. |
+| sprint1_plan.md | Next-sprint goals and success criteria. |
 
 ## AI Usage
-GenAI will be used for this project under the restrictions provided by the course/project outline. It will be used mostly for formatting, and will be aptly described when used.
+GenAI will be used for this project under the restrictions provided by the course/project outline. It will be used mostly for formatting, and will be aptly described when used otherwise.
 
 
