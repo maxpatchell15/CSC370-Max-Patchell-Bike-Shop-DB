@@ -1,14 +1,7 @@
 # Functional Dependencies and BCNF
 
 ## Assumptions
-
-- Each CustomerID identifies one customer.
-- Each ModelID identifies one bicycle model.
-- Each BikeID identifies one individual bicycle.
-- Each SaleID identifies one sale.
-- Each bicycle can't be sold more than once.
-- Names, email addresses, phone numbers, and model names don't have to be unique.
-- Individual bicycles of the same model may have different listed prices.
+- Documented under constrains in relational_schema.md 
 
 ## Functional Dependencies
 
@@ -17,6 +10,7 @@ CustomerID → Name, Email, Phone
 
 BicycleModel:
 ModelID → Brand, ModelName
+Brand, ModelName → ModelID
 
 Bicycle:
 BikeID → ModelID, ListedPrice
@@ -27,27 +21,59 @@ SaleID → CustomerID, SaleDate
 SaleItem:
 BikeID → SaleID, PricePaid
 
-SaleID does not determine BikeID in SaleItem because one sale can include multiple bicycles.
+ElectricBicycleModel:
+ModelID → BatteryCapacity
+
+Technician:
+TechnicianID → Name
+
+MaintenanceRecord:
+BikeID, RecordNumber → TechnicianID, ServiceDate, Description
+
+SaleID does not determine BikeID in SaleItem because one sale can
+include multiple bicycles.
+
+RecordNumber alone does not identify a maintenance record because
+different bicycles can have the same record number. BikeID alone
+is also insufficient because a bicycle can have several records.
 
 ## Closures and Keys
+
+Each closure below is calculated within its own relation.
 
 | Relation | Attribute closure | Key |
 |---|---|---|
 | Customer | {CustomerID}+ = {CustomerID, Name, Email, Phone} | CustomerID |
 | BicycleModel | {ModelID}+ = {ModelID, Brand, ModelName} | ModelID |
+| BicycleModel | {Brand, ModelName}+ = {Brand, ModelName, ModelID} | Brand, ModelName |
 | Bicycle | {BikeID}+ = {BikeID, ModelID, ListedPrice} | BikeID |
 | Sale | {SaleID}+ = {SaleID, CustomerID, SaleDate} | SaleID |
 | SaleItem | {BikeID}+ = {BikeID, SaleID, PricePaid} | BikeID |
+| ElectricBicycleModel | {ModelID}+ = {ModelID, BatteryCapacity} | ModelID |
+| Technician | {TechnicianID}+ = {TechnicianID, Name} | TechnicianID |
+| MaintenanceRecord | {BikeID, RecordNumber}+ = {BikeID, RecordNumber, TechnicianID, ServiceDate, Description} | BikeID, RecordNumber |
 
-For each table the listed ID determines all its columns. No additional
-attributes are needed to form the key. 
+Each listed key determines every attribute in its table, and no
+attribute can be removed from the key while keeping that property.
+
+BicycleModel has two candidate keys: ModelID and (Brand, ModelName).
+ModelID is the chosen primary key.
+
+MaintenanceRecord uses the combined primary key (BikeID, RecordNumber).
 
 ## BCNF Justification
 
-Under the above functional dependencies, all five relations are in
-BCNF: every non-trivial dependency has a superkey on its left side.
+Under the stated dependencies, all eight relations are in BCNF:
+every non-trivial functional dependency has a superkey on its left side.
 
-Bicycle model details are stored separately from individual bicycles
-because ModelID determines Brand and ModelName, but does not determine
-BikeID or ListedPrice. This avoids repeating model details for every
-bicycle.
+In BicycleModel, both ModelID and (Brand, ModelName) are keys.
+In MaintenanceRecord, the determinant is the complete combined key
+(BikeID, RecordNumber).
+
+Model details are stored separately from individual bicycles.
+ModelID determines Brand and ModelName, but does not determine
+BikeID or ListedPrice.
+
+Technician names are stored in Technician rather than repeated
+in MaintenanceRecord. Electric-model attributes are stored in
+ElectricBicycleModel rather than added to every bicycle model.
