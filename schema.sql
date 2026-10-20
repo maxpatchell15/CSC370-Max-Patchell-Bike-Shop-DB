@@ -19,8 +19,10 @@ CREATE TABLE Bicycle (
     ModelID INT NOT NULL,
     ListedPrice DECIMAL(10, 2) NOT NULL,
 
-    FOREIGN KEY (ModelID)
-        REFERENCES BicycleModel(ModelID)
+    CONSTRAINT fk_bicycle_model
+	    FOREIGN KEY (ModelID)
+	    REFERENCES BicycleModel(ModelID)
+	    ON DELETE RESTRICT
 );
 
 CREATE TABLE Sale (
@@ -28,8 +30,10 @@ CREATE TABLE Sale (
     CustomerID INT NOT NULL,
     SaleDate DATE NOT NULL,
 
-    FOREIGN KEY (CustomerID)
-        REFERENCES Customer(CustomerID)
+    CONSTRAINT fk_sale_customer
+	    FOREIGN KEY (CustomerID)
+	    REFERENCES Customer(CustomerID)
+	    ON DELETE RESTRICT
 );
 
 CREATE TABLE SaleItem (
@@ -37,11 +41,15 @@ CREATE TABLE SaleItem (
     SaleID INT NOT NULL,
     PricePaid DECIMAL(10, 2) NOT NULL,
 
-    FOREIGN KEY (BikeID)
-        REFERENCES Bicycle(BikeID),
-
-    FOREIGN KEY (SaleID)
-        REFERENCES Sale(SaleID)
+    CONSTRAINT fk_saleitem_bicycle
+	    FOREIGN KEY (BikeID)
+	    REFERENCES Bicycle(BikeID)
+	    ON DELETE RESTRICT,
+	
+	CONSTRAINT fk_saleitem_sale
+	    FOREIGN KEY (SaleID)
+	    REFERENCES Sale(SaleID)
+	    ON DELETE RESTRICT
 );
 
 CREATE TABLE ElectricBicycleModel (
@@ -79,3 +87,4 @@ CREATE TABLE MaintenanceRecord (
 
 
 
+s
