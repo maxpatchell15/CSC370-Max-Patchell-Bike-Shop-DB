@@ -26,3 +26,9 @@ VALUES
 -- To reset sales items for demo
 DELETE FROM SaleItem;
 DELETE FROM Sale;
+
+INSERT INTO BicycleModel (Brand, ModelName)
+SELECT Brand, ModelName
+FROM BicycleModel
+ORDER BY ModelID
+LIMIT 1;
