@@ -36,7 +36,7 @@ on more detailed queries, performance, and consistency.
 | sample_data.sql | Sample customers, models, bicycles, sales, technicians, and maintenance records. |
 | queries.sql | Purchase details, available inventory, sale totals, and electric-bike maintenance history. |
 | constraint_test.sql | Intentional constraint violations with expected errors. |
-| design_review.md | Review of the eight design qualities, TA feedback, test results, and limitations. |
+| quality_assessment.md | Review of the eight design qualities, TA feedback, test results, and limitations. |
 | sprint1_plan.md | Original goals and success criteria submitted at kickoff. |
 | sprint2_plan.md | Next-sprint goals covering Complex SQL Queries and Advanced SQL. |
 
