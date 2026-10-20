@@ -30,3 +30,28 @@ SELECT
     SUM(PricePaid) AS TotalPaid
 FROM SaleItem
 GROUP BY SaleID;
+
+
+-- 4. Show maintenance history for the electric bicycle
+SELECT
+    Bicycle.BikeID,
+    BicycleModel.Brand,
+    BicycleModel.ModelName,
+    ElectricBicycleModel.BatteryCapacity,
+    MaintenanceRecord.RecordNumber,
+    MaintenanceRecord.ServiceDate,
+    MaintenanceRecord.Description,
+    Technician.Name AS TechnicianName
+FROM Bicycle
+JOIN BicycleModel
+    ON Bicycle.ModelID = BicycleModel.ModelID
+JOIN ElectricBicycleModel
+    ON BicycleModel.ModelID = ElectricBicycleModel.ModelID
+JOIN MaintenanceRecord
+    ON Bicycle.BikeID = MaintenanceRecord.BikeID
+JOIN Technician
+    ON MaintenanceRecord.TechnicianID = Technician.TechnicianID
+WHERE BicycleModel.Brand = 'Demo Bike'
+  AND BicycleModel.ModelName = 'Ventura Roadster'
+ORDER BY Bicycle.BikeID, MaintenanceRecord.RecordNumber;
+

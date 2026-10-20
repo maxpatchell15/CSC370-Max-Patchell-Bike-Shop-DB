@@ -23,12 +23,33 @@ VALUES
     (1, 1, 10000.36),
     (3, 1, 8475.44);
 
--- To reset sales items for demo
-DELETE FROM SaleItem;
-DELETE FROM Sale;
-
+-- test eletrical model
 INSERT INTO BicycleModel (Brand, ModelName)
-SELECT Brand, ModelName
-FROM BicycleModel
-ORDER BY ModelID
-LIMIT 1;
+VALUES ('Demo Bike', 'Ventura Roadster');
+
+SET @electric_model_id = LAST_INSERT_ID();
+
+INSERT INTO ElectricBicycleModel (ModelID, BatteryCapacity)
+VALUES (@electric_model_id, 500);
+
+-- individual bicycle of that model
+INSERT INTO Bicycle (ModelID, ListedPrice)
+VALUES (@electric_model_id, 2500.00);
+
+SET @electric_bike_id = LAST_INSERT_ID();
+
+-- technician
+INSERT INTO Technician (Name)
+VALUES ('Grace Smith');
+
+SET @technician_id = LAST_INSERT_ID();
+
+-- two maintenance records for this bicycle
+INSERT INTO MaintenanceRecord
+    (BikeID, RecordNumber, TechnicianID, ServiceDate, Description)
+VALUES
+    (@electric_bike_id, 1, @technician_id, '2026-10-18',
+     'Checked brakes and adjusted cables'),
+    (@electric_bike_id, 2, @technician_id, '2026-10-19',
+     'Checked battery and tire pressure');
+
