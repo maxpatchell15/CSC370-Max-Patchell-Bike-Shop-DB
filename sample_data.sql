@@ -53,3 +53,62 @@ VALUES
     (@electric_bike_id, 2, @technician_id, '2026-10-19',
      'Checked battery and tire pressure');
 
+
+-- Sprint 2: customers for spending and NULL examples
+INSERT INTO Customer (Name, Email, Phone)
+VALUES ('Tenille O''Neal', 'tenille@example.com', NULL);
+
+SET @tenille_id = LAST_INSERT_ID();
+
+INSERT INTO Customer (Name, Email, Phone)
+VALUES ('Gordon Ramsey', NULL, '250-555-0102');
+
+SET @gordon_id = LAST_INSERT_ID();
+
+INSERT INTO Customer (Name, Email, Phone)
+VALUES ('Robert Bigam', NULL, NULL);
+
+
+-- Three additional bicycles using model 1
+INSERT INTO Bicycle (ModelID, ListedPrice)
+VALUES (1, 1000.00);
+
+SET @bike_a = LAST_INSERT_ID();
+
+INSERT INTO Bicycle (ModelID, ListedPrice)
+VALUES (1, 2000.00);
+
+SET @bike_b = LAST_INSERT_ID();
+
+INSERT INTO Bicycle (ModelID, ListedPrice)
+VALUES (1, 1500.00);
+
+SET @bike_c = LAST_INSERT_ID();
+
+
+-- Tenille makes two separate purchases
+INSERT INTO Sale (CustomerID, SaleDate)
+VALUES (@tenille_id, '2026-11-01');
+
+SET @sale_a = LAST_INSERT_ID();
+
+INSERT INTO SaleItem (BikeID, SaleID, PricePaid)
+VALUES (@bike_a, @sale_a, 1000.00);
+
+INSERT INTO Sale (CustomerID, SaleDate)
+VALUES (@tenille_id, '2026-11-02');
+
+SET @sale_b = LAST_INSERT_ID();
+
+INSERT INTO SaleItem (BikeID, SaleID, PricePaid)
+VALUES (@bike_b, @sale_b, 2000.00);
+
+
+-- Gordon makes one purchase; Robert makes none
+INSERT INTO Sale (CustomerID, SaleDate)
+VALUES (@gordon_id, '2026-11-03');
+
+SET @sale_c = LAST_INSERT_ID();
+
+INSERT INTO SaleItem (BikeID, SaleID, PricePaid)
+VALUES (@bike_c, @sale_c, 1500.00);
