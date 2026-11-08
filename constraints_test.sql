@@ -1,7 +1,8 @@
 
 -- Run tests individually after loading sample_data.sql.
--- Each test below is expected to produce the stated error.
--- Tests use sample BikeID 4 and TechnicianID 1.
+-- Expected results are noted beside each test.
+-- Run the transaction test in order, including ROLLBACK to reset it.
+-- Related tests use sample BikeID 4 and TechnicianID 1.
 
 -- uniqueness test
 INSERT INTO BicycleModel (Brand, ModelName)
@@ -36,3 +37,57 @@ WHERE TechnicianID = 1;
 -- Expected: duplicate primary-key error 1062
 INSERT INTO SaleItem (BikeID, SaleID, PricePaid)
 VALUES (1, 1, 10000.36);
+
+
+
+-- Sprint 2:
+
+-- Expected: Recorded sale prices cannot be changed
+UPDATE SaleItem
+SET PricePaid = PricePaid + 1
+WHERE BikeID = 1;
+
+-- Test a valid new sale item without keeping the test data
+START TRANSACTION;
+
+-- Bike 2 is unsold in the current sample data
+INSERT INTO SaleItem (BikeID, SaleID, PricePaid)
+VALUES (2, 1, 9000.00);
+
+-- Expected: one row with PricePaid 9000.00
+SELECT *
+FROM SaleItem
+WHERE BikeID = 2;
+
+-- Undo the test insert
+ROLLBACK;
+
+-- Expected: no rows after rollback
+SELECT *
+FROM SaleItem
+WHERE BikeID = 2;
+
+
+-- Client Feedback
+-- Negative listed price should be rejected
+-- Expected: Check constraint 'check_bicycle_listed_price' is violated
+UPDATE Bicycle
+SET ListedPrice = -1
+WHERE BikeID = 1;
+
+-- Negative sale price should be rejected
+-- Uses an unsold bike so the price check is tested
+-- Expected: Check constraint 'check_saleitem_price_paid' is violated
+INSERT INTO SaleItem (BikeID, SaleID, PricePaid)
+VALUES (2, 1, -1);
+
+-- Zero battery capacity should be rejected
+-- Expected: Check constraint 'check_electric_battery_capacity' is violated
+UPDATE ElectricBicycleModel
+SET BatteryCapacity = 0
+WHERE ModelID = (
+    SELECT ModelID
+    FROM BicycleModel
+    WHERE Brand = 'Demo Bike'
+      AND ModelName = 'Ventura Roadster'
+);
