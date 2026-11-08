@@ -18,6 +18,9 @@ CREATE TABLE Bicycle (
     BikeID INT AUTO_INCREMENT PRIMARY KEY,
     ModelID INT NOT NULL,
     ListedPrice DECIMAL(10, 2) NOT NULL,
+    
+    CONSTRAINT check_bicycle_listed_price
+    CHECK (ListedPrice >= 0),
 
     CONSTRAINT fk_bicycle_model
 	    FOREIGN KEY (ModelID)
@@ -40,6 +43,9 @@ CREATE TABLE SaleItem (
     BikeID INT PRIMARY KEY,
     SaleID INT NOT NULL,
     PricePaid DECIMAL(10, 2) NOT NULL,
+    
+    CONSTRAINT check_saleitem_price_paid
+    CHECK (PricePaid >= 0),
 
     CONSTRAINT fk_saleitem_bicycle
 	    FOREIGN KEY (BikeID)
@@ -55,6 +61,9 @@ CREATE TABLE SaleItem (
 CREATE TABLE ElectricBicycleModel (
     ModelID INT PRIMARY KEY,
     BatteryCapacity INT NOT NULL,
+    
+    CONSTRAINT check_electric_battery_capacity
+    CHECK (BatteryCapacity > 0),
 
     FOREIGN KEY (ModelID)
         REFERENCES BicycleModel(ModelID)
@@ -84,7 +93,3 @@ CREATE TABLE MaintenanceRecord (
         ON DELETE RESTRICT
 );
 
-
-
-
-s
