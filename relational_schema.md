@@ -63,6 +63,9 @@ different bicycles.
 - Customer email addresses and phone numbers are optional.
 - A sale should contain at least one bicycle, but this minimum is
   not enforced by the current SQL constraints.
+- ListedPrice and PricePaid can be zero but cannot be negative.
+- Electric bicycle models must have a positive BatteryCapacity.
+- The price paid for a bicycle cannot be changed once its sale is recorded.
 
 ## Pricing
 
@@ -70,7 +73,7 @@ ListedPrice belongs to each individual bicycle because condition and
 wear can affect its price. Using an update statement the price for 
 multiple bicycles can still be changed at once. 
 
-A shared model base price was considered with an adjustments for each
+A shared model base price was considered within adjustments for each
 bicycle, but keeping individual prices allows the current design to remain 
 simple.
 
